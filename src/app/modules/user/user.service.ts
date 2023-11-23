@@ -6,7 +6,7 @@ const createUser= async(data:IUser)=>{
    return result;
 }
 const getAllusers = async () => {
-  const result = await UserModel.find({})
+  const result = await UserModel.find({}  )
   return result
 }
 

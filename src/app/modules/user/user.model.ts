@@ -2,7 +2,6 @@ import mongoose, { Schema } from 'mongoose'
 import { IUser } from './user.interface'
 import bcrypt from 'bcrypt'
 
-// Schema
 const Userschema = new Schema<IUser>({
   name: { type: String, required: true },
   password: { type: String, required: true }, 
@@ -15,11 +14,13 @@ Userschema.pre('save', async function (next) {
   next()
 })
 
-Userschema.pre('find', async function (next) {
-  const user = this.find 
- console.log( this)
+Userschema.post('find', function (docs) {
+  docs.forEach((doc: { password: string }) => { 
+    doc.password = ''
+  })
 
-  next()
+  return docs
 })
+
 
 export const UserModel = mongoose.model('User', Userschema)
