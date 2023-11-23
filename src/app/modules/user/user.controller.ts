@@ -1,7 +1,7 @@
 import { Request, RequestHandler, Response } from 'express'
 import { usersServices } from './user.service'
 import userZodSchema from './user.validation'
-import { IUser } from './user.interface'
+import  IUser  from './user.interface'
 
 const createUser: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body
@@ -18,7 +18,18 @@ const getAllusers: RequestHandler = async (req: Request, res: Response) => {
   })
 }
 
+const getSingleUser = async(req: Request, res: Response) => {
+  const id = req.params.id
+
+  const result = await usersServices.getSingleUser(id)
+
+  res.status(200).json({
+    data: result,
+  })
+}
+
 export const usersController = {
   createUser,
   getAllusers,
+  getSingleUser,
 }
