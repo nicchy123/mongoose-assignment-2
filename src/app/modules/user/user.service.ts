@@ -9,18 +9,27 @@ const getAllusers = async () => {
   const result = await UserModel.find({}).select('-password')
   return result
 }
-const getSingleUser = async (_id: string) => {
-  const isExist = await UserModel.findById(_id)
-  if (isExist) {
-    const result = await UserModel.find({ _id }).select('-password')
-    return result
-  } else {
-    throw new Error('user not found')
-  }
+const deleteUser = async (userId: number) => {
+  const result = await UserModel.updateOne({ userId })
+  return result
+}
+const getSingleUser = async (userId: number) => {
+  const result = await UserModel.findOne({ userId }, { password: 0 })
+  return result
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const updateUser = async (userId: any, data: any) => {
+  const result = await UserModel.findOneAndUpdate({ userId }, data, {
+    new: true,
+  })
+  return result
 }
 
 export const usersServices = {
   createUser,
   getAllusers,
   getSingleUser,
+  deleteUser,
+  updateUser,
 }

@@ -1,8 +1,8 @@
 import mongoose, { Schema } from 'mongoose'
-import  IUser  from './user.interface'
+import IUser, { IUserMethods } from './user.interface'
 import bcrypt from 'bcrypt'
 
-const Userschema = new Schema<IUser>(
+const Userschema = new Schema<IUser,Record<string, never>, IUserMethods>(
   {
     userId: {
       type: Number,
@@ -65,30 +65,17 @@ const Userschema = new Schema<IUser>(
     },
   },
 )
+Userschema.statics.isUserExists = async function (id: string) {
+  const existingUser = await UserModel.findOne({ id })
+  return existingUser
+}
 
 Userschema.pre('save', async function (next) {
   const user = this as IUser
   user.password = await bcrypt.hash(user.password, 12)
-
   next()
 })
 
-Userschema.post('find', function (docs) {
-  docs.forEach((doc: { password?: string }) => {
-    if (doc && doc.password) {
-      delete doc.password
-    }
-  })
-  return docs
-})
-Userschema.post('findOne', function (docs) {
-  docs.forEach((doc: { password?: string }) => {
-    if (doc && doc.password) {
-      delete doc.password
-    }
-  })
-  return docs
-})
 
 
 export const UserModel = mongoose.model('User', Userschema)

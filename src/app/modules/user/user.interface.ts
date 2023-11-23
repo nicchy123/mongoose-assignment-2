@@ -1,3 +1,4 @@
+
 interface FullName {
   firstName: string
   lastName: string
@@ -10,7 +11,7 @@ interface Address {
 }
 
 interface IUser {
-  userId: number
+  userId: number,
   username: string
   password: string
   fullName: FullName
@@ -21,4 +22,9 @@ interface IUser {
   address: Address
 }
 
-export default IUser
+
+export interface IUserMethods {
+  isUserExists(id: string): Promise<IUser | null>
+}
+
+export default IUser;
