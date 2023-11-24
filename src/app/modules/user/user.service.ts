@@ -2,7 +2,9 @@ import IUser from './user.interface'
 import { UserModel } from './user.model'
 
 const createUser = async (data: IUser) => {
-  const result = await UserModel.create(data)
+  
+  const result = (await UserModel.create(data))
+
   return result
 }
 const getAllusers = async () => {
@@ -10,7 +12,7 @@ const getAllusers = async () => {
   return result
 }
 const deleteUser = async (userId: number) => {
-  const result = await UserModel.updateOne({ userId })
+  const result = await UserModel.deleteOne({ userId })
   return result
 }
 const getSingleUser = async (userId: number) => {
@@ -18,8 +20,13 @@ const getSingleUser = async (userId: number) => {
   return result
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const updateUser = async (userId: any, data: any) => {
+const updateUser = async (userId: number, data: IUser) => {
+  const result = await UserModel.findOneAndUpdate({ userId }, data, {
+    new: true,
+  })
+  return result
+}
+const createOrder = async (userId: number, data: IUser) => {
   const result = await UserModel.findOneAndUpdate({ userId }, data, {
     new: true,
   })
@@ -32,4 +39,5 @@ export const usersServices = {
   getSingleUser,
   deleteUser,
   updateUser,
+  createOrder,
 }
