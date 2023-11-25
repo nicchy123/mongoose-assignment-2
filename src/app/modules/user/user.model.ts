@@ -58,15 +58,19 @@ const Userschema = new Schema<IUser, IUserModel>(
       },
     },
     orders: [
+      
       {
         price: {
           type: Number,
+          required: false
         },
         quantity: {
           type: Number,
+          required: false
         },
         productName: {
           type: String,
+          required: false
         },
       },
     ],
@@ -85,6 +89,13 @@ Userschema.pre('save', async function (next) {
   user.password = await bcrypt.hash(user.password, 12)
   next()
 })
+
+
+// Userschema.post('findOne', async function (next) {
+//   const user = this as IUser
+  
+//   next()
+// })
 
 
 
