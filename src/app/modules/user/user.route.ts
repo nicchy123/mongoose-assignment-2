@@ -6,6 +6,10 @@ router.post('/', usersController.createUser)
 
 router.get('/:userId', usersController.getSingleUser)
 
+router.get('/:userId/orders', usersController.getSingleUsersOrders)
+
+router.get('/:userId/orders/total-price', usersController.getSingleUsersOrdersTotalPrice)
+
 router.delete('/:userId', usersController.deleteUser)
 
 router.get('/', usersController.getAllusers)

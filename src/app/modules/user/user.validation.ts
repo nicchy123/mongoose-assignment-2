@@ -14,7 +14,7 @@ const orderSchema = z.object({
   productName: z.string(),
   price: z.number(),
   quantity: z.number(),
-}).optional()
+}).optional().array()
 
 const userZodSchema = z.object({
   userId: z.number(),
@@ -29,4 +29,24 @@ const userZodSchema = z.object({
   orders: orderSchema,
 })
 
-export default userZodSchema;
+const userUpdateZodSchema = z.object({
+  userId: z.number().optional(),
+  username: z.string().optional(),
+  password: z.string().optional(),
+  fullName: z.object({
+    firstName: z.string().optional(),
+    lastName: z.string().optional(),
+  }),
+  age: z.number().optional(),
+  email: z.string().optional(),
+  isActive: z.boolean().optional(),
+  hobbies: z.array(z.string()).optional(),
+  address: z.object({
+    street: z.string().optional(),
+    city: z.string().optional(),
+    country: z.string().optional(),
+  }),
+  orders: orderSchema,
+})
+
+export const zodValidation = { userZodSchema, userUpdateZodSchema }

@@ -56,28 +56,22 @@ const Userschema = new Schema<IUser, IUserModel>(
         type: String,
         required: true,
       },
-      orders: {
+    },
+    orders: [
+      {
         price: {
           type: Number,
-          required: false,
         },
         quantity: {
           type: Number,
-          required: false,
         },
-        productName:{
-          type:String,
-          required: false,
-        }
+        productName: {
+          type: String,
+        },
       },
-    },
+    ],
   },
-  {
-    timestamps: false,
-    toJSON: {
-      virtuals: true,
-    },
-  },
+
 )
 
 
@@ -85,6 +79,7 @@ Userschema.statics.isUserExists= async function(userId:string){
   const existingUser = await UserModel.findOne({userId});
   return existingUser;
 }
+
 Userschema.pre('save', async function (next) {
   const user = this as IUser
   user.password = await bcrypt.hash(user.password, 12)
