@@ -90,6 +90,7 @@ const updateUser = async (req: Request, res: Response) => {
   })
  }
 }
+
 const createOrder = async (req: Request, res: Response) => {
   try {
     const id: number = Number(req.params.userId)
@@ -97,7 +98,7 @@ const createOrder = async (req: Request, res: Response) => {
     const result = await usersServices.createOrder(id, data)
     res.status(200).json({
       success: true,
-      message: 'User updated successfully!',
+      message: 'Order created successfully!',
       data: result,
     })
   } catch (error: any) {

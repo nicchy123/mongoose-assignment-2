@@ -11,6 +11,7 @@ router.delete('/:userId', usersController.deleteUser)
 router.get('/', usersController.getAllusers)
 
 router.put('/:userId', usersController.updateUser)
+
 router.put('/:userId/orders', usersController.createOrder)
 
 export const UserRoutes = router;

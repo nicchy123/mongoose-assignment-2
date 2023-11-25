@@ -26,12 +26,13 @@ const updateUser = async (userId: number, data: IUser) => {
   })
   return result
 }
+
 const createOrder = async (userId: number, data: IUser) => {
-  const result = await UserModel.findOneAndUpdate({ userId }, data, {
-    new: true,
-  })
+  const result = await UserModel.updateOne({ userId }, data);
   return result
 }
+
+
 
 export const usersServices = {
   createUser,

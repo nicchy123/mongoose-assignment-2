@@ -56,20 +56,20 @@ const Userschema = new Schema<IUser, IUserModel>(
         type: String,
         required: true,
       },
-      // orders: [
-      //   price: {
-      //     type: Number,
-      //     required: false,
-      //   },
-      //   quantity: {
-      //     type: Number,
-      //     required: false,
-      //   },
-      //   productName:{
-      //     type:String,
-      //     required: false,
-      //   }
-      // ],
+      orders: {
+        price: {
+          type: Number,
+          required: false,
+        },
+        quantity: {
+          type: Number,
+          required: false,
+        },
+        productName:{
+          type:String,
+          required: false,
+        }
+      },
     },
   },
   {
