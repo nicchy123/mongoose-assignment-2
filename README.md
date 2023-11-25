@@ -31,7 +31,8 @@ These instructions will help you set up and run the project on your local machin
 
 ```bash
    npm install
-
+   
+   ...
 3. to start server: npm run dev
 
 ```bash
