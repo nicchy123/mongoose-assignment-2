@@ -2,7 +2,7 @@ import IUser from './user.interface'
 import { UserModel } from './user.model'
 
 const createUser = async (data: IUser) => {
-  const result = (await UserModel.create(data))
+  const result = await UserModel.create(data)
   return result
 }
 const getAllusers = async () => {
@@ -14,7 +14,7 @@ const deleteUser = async (userId: number) => {
   return result
 }
 const getSingleUser = async (userId: number) => {
-  const result = await UserModel.findOne({ userId }, { password: 0 })
+  const result = await UserModel.findOne({ userId }, { password: 0, orders:0 })
   return result
 }
 const getSingleUsersOrdersTotalPrice = async (userId: number) => {

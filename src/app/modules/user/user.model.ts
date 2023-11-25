@@ -1,6 +1,7 @@
 import mongoose, { Schema } from 'mongoose'
-import IUser, { IUserModel } from './user.interface'
+import IUser, { IUserAfterCreate, IUserModel } from './user.interface'
 import bcrypt from 'bcrypt'
+
 
 const Userschema = new Schema<IUser, IUserModel>(
   {
@@ -75,14 +76,10 @@ const Userschema = new Schema<IUser, IUserModel>(
       },
     ],
   },
-
 )
 
 
-Userschema.statics.isUserExists= async function(userId:string){
-  const existingUser = await UserModel.findOne({userId});
-  return existingUser;
-}
+
 
 Userschema.pre('save', async function (next) {
   const user = this as IUser
@@ -90,12 +87,26 @@ Userschema.pre('save', async function (next) {
   next()
 })
 
-
-// Userschema.post('findOne', async function (next) {
-//   const user = this as IUser
-  
-//   next()
+// Userschema.post('save', async function (doc, next) {
+//   try {
+//     if (doc as IUserAfterCreate) {
+//       delete doc.password
+//     }
+//     next()
+//     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   } catch (error: any) {
+//     next(error)
+//   }
 // })
+
+Userschema.statics.isUserExists= async function(userId:string){
+  const existingUser = await UserModel.findOne({userId});
+  return existingUser;
+}
+
+
+
+
 
 
 
