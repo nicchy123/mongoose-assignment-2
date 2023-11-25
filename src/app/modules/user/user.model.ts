@@ -1,84 +1,78 @@
 import mongoose, { Schema } from 'mongoose'
-import IUser, { IUserAfterCreate, IUserModel } from './user.interface'
+import IUser, { IUserModel } from './user.interface'
 import bcrypt from 'bcrypt'
 
-
-const Userschema = new Schema<IUser, IUserModel>(
-  {
-    userId: {
-      type: Number,
-      required: true,
-      unique: true,
-    },
-    username: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    fullName: {
-      firstName: {
-        type: String,
-        required: true,
-      },
-      lastName: {
-        type: String,
-        required: true,
-      },
-    },
-    age: {
-      type: Number,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-    },
-    isActive: {
-      type: Boolean,
-      required: true,
-    },
-    hobbies: {
-      type: [String],
-      required: true,
-    },
-    address: {
-      street: {
-        type: String,
-        required: true,
-      },
-      city: {
-        type: String,
-        required: true,
-      },
-      country: {
-        type: String,
-        required: true,
-      },
-    },
-    orders: [
-      
-      {
-        price: {
-          type: Number,
-          required: false
-        },
-        quantity: {
-          type: Number,
-          required: false
-        },
-        productName: {
-          type: String,
-          required: false
-        },
-      },
-    ],
+const Userschema = new Schema<IUser, IUserModel>({
+  userId: {
+    type: Number,
+    required: true,
+    unique: true,
   },
-)
-
-
+  username: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  fullName: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+  },
+  age: {
+    type: Number,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  isActive: {
+    type: Boolean,
+    required: true,
+  },
+  hobbies: {
+    type: [String],
+    required: true,
+  },
+  address: {
+    street: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    country: {
+      type: String,
+      required: true,
+    },
+  },
+  orders: [
+    {
+      price: {
+        type: Number,
+        required: false,
+      },
+      quantity: {
+        type: Number,
+        required: false,
+      },
+      productName: {
+        type: String,
+        required: false,
+      },
+    },
+  ],
+})
 
 
 Userschema.pre('save', async function (next) {
@@ -87,27 +81,17 @@ Userschema.pre('save', async function (next) {
   next()
 })
 
-// Userschema.post('save', async function (doc, next) {
-//   try {
-//     if (doc as IUserAfterCreate) {
-//       delete doc.password
-//     }
-//     next()
-//     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//   } catch (error: any) {
-//     next(error)
-//   }
-// })
+Userschema.set('toJSON', {
+  virtuals: true,
+  transform: (doc, ret) => {
+    delete ret.password
+  },
+})
 
-Userschema.statics.isUserExists= async function(userId:string){
-  const existingUser = await UserModel.findOne({userId});
-  return existingUser;
+
+Userschema.statics.isUserExists = async function (userId: string) {
+  const existingUser = await UserModel.findOne({ userId })
+  return existingUser
 }
-
-
-
-
-
-
 
 export const UserModel = mongoose.model<IUser, IUserModel>('User', Userschema)

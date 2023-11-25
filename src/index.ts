@@ -6,8 +6,15 @@ const app: Application = express()
 
 //parsers
 app.use(express.json())
+
 app.use(cors())
 
+app.get('/', (req, res) => {
+  res.send({
+    succes: 'true',
+    message: 'server is running successfully',
+  })
+})
 // application routes
 app.use('/api/users', UserRoutes)
 
