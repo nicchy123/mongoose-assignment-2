@@ -26,6 +26,13 @@ These instructions will help you set up and run the project on your local machin
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/your-project.git
+   git clone https://github.com/nicchy123/mongoose-assignment-2.git
 2. run npm install
+
+```bash
+   npm install
+
 3. to start server: npm run dev
+
+```bash
+   npm run dev
